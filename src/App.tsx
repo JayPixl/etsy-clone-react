@@ -1,41 +1,19 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+
+  const [message, setMessage] = useState("")
+
+  const api_base = process.env.NODE_ENV === "production" ? "/api" : "http://127.0.0.1:3001/api"
 
   useEffect(() => {
-    fetch('/api')
-      .then(res => res.json)
-      .then((data: any) => data?.message && console.log(data.message))
-  })
+    fetch(api_base)
+      .then(res => res.json())
+      .then((data: any) => data?.message ? setMessage(data.message) : setMessage("ERROR"))
+      .catch(() => setMessage("ERROR"))
+  }, [])
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  return <div>
+    Message from API: {message}
+  </div>
 }
-
-export default App
