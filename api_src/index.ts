@@ -7,6 +7,7 @@ app.use(cors({
     origin: "*"
 }))
 
+
 app.get('/api', (req, res) => {
     res.json({ message: 'Hello from Express API!' })
 })
