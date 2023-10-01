@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"ts-node-esm --project tsconfig.api.json api_src/index.ts\" \"vite\"",
-    "dev-api": "tsc --project tsconfig.api.json",
-    "devApi": "nodemon api/index.js",
-    "build": "tsc --project tsconfig.api.json && tsc --project tsconfig.json && vite build",
+    "build": "concurrently \"tsc --project tsconfig.api.json\" \"tsc && vite build\"",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
