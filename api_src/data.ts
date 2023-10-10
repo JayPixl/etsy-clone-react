@@ -1,6 +1,9 @@
 import express from 'express'
 import cors from 'cors'
-import { prisma } from './utils/_prisma.js'
+import { PrismaClient } from '@prisma/client'
+
+
+const prisma = new PrismaClient()
 
 let app: express.Express
 if (process.env.NODE_ENV === "production") {
