@@ -1,6 +1,9 @@
 import express from 'express'
 import cors from 'cors'
 import { prisma } from './utils/_prisma.js'
+
+import dataRoute from './data.js'
+
 const app = express()
 
 app.use(express.json())
@@ -8,26 +11,11 @@ app.use(cors({
     origin: "*"
 }))
 
+app.use(dataRoute)
+
 
 app.get('/api', (_, res) => {
     res.json({ message: 'Hello from Express API!' })
-})
-
-app.get('/api/data', async (_, res) => {
-    try {
-        const results = {
-            categories: await prisma.category.findMany(),
-            popularListings: await prisma.popularListings.findMany(),
-            otherListings: await prisma.otherListings.findMany()
-        }
-        res.json({
-            results
-        })
-    } catch (e) {
-        res.json({
-            error: "Could not retrieve data"
-        })
-    }
 })
 
 // app.get("/api/setmessages", async (_, res) => {
