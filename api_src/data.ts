@@ -1,11 +1,13 @@
 import express from 'express'
 import cors from 'cors'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from './utils/_prisma.js'
 
-
-const prisma = new PrismaClient()
-
-const app = express()
+let app: express.Express
+if (process.env.NODE_ENV === "production") {
+    app = express()
+} else {
+    app = express.Router() as express.Express
+}
 
 app.use(express.json())
 app.use(cors({
@@ -13,43 +15,22 @@ app.use(cors({
 }))
 
 app.get('/api/data', async (_: any, res: any) => {
-    let error: boolean = false
+    let results: any
+    let error
 
-    let categories: any
-    let popularListings: any
-    let otherListings: any
+    try {
+        results = {
+            categories: await prisma.category.findMany(),
+            popularListings: await prisma.popularListings.findMany(),
+            otherListings: await prisma.otherListings.findMany()
+        }
+    } catch (e) {
+        error = "Could not fetch data..."
+    }
 
-    // try {
-    //     categories = await prisma.category.findMany()
-    //     console.log("DONE!")
-    // } catch (e) {
-    //     error = true
-    // }
-
-    // try {
-    //     popularListings = await prisma.popularListings.findMany()
-    //     console.log("DONE!")
-    // } catch (e) {
-    //     error = true
-    // }
-
-    // try {
-    //     otherListings = await prisma.otherListings.findMany()
-    //     console.log("DONE!")
-    // } catch (e) {
-    //     error = true
-    // }
-
-    categories = await prisma.category.findMany()
-    popularListings = await prisma.popularListings.findMany()
-    otherListings = await prisma.otherListings.findMany()
-
+    console.log(results)
     res.json({
-        results: {
-            categories,
-            popularListings,
-            otherListings
-        },
+        results,
         error
     })
 })
