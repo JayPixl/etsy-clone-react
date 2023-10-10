@@ -1,14 +1,20 @@
-import express from 'express'
+import express, { Router } from 'express'
 import cors from 'cors'
 import { prisma } from './utils/_prisma.js'
-const router = express.Router()
 
-router.use(express.json())
-router.use(cors({
+let app: any
+if (process.env.NODE_ENV === "production") {
+    app = express()
+} else {
+    app = express.Router()
+}
+
+app.use(express.json())
+app.use(cors({
     origin: "*"
 }))
 
-router.get('/api/data', async (_, res) => {
+app.get('/api/data', async (_, res) => {
     try {
         const results = {
             categories: await prisma.category.findMany(),
@@ -25,4 +31,4 @@ router.get('/api/data', async (_, res) => {
     }
 })
 
-export default router
+export default app

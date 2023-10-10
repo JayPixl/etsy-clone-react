@@ -11,8 +11,6 @@ app.use(cors({
     origin: "*"
 }))
 
-app.use(dataRoute)
-
 
 app.get('/api', (_, res) => {
     res.json({ message: 'Hello from Express API!' })
@@ -141,7 +139,9 @@ app.all("/api/*", (_, res) => {
     res.json({ error: "Invalid request" })
 })
 
+
 if (process.env.NODE_ENV !== "production") {
+    app.use(dataRoute)
     app.listen(3001, () => console.log("Dev API is online 🚀"))
 }
 
