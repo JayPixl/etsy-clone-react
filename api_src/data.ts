@@ -5,12 +5,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-let app: express.Express
-if (process.env.NODE_ENV === "production") {
-    app = express()
-} else {
-    app = express.Router() as express.Express
-}
+const app = express()
 
 app.use(express.json())
 app.use(cors({
@@ -24,26 +19,30 @@ app.get('/api/data', async (_: any, res: any) => {
     let popularListings: any
     let otherListings: any
 
-    try {
-        categories = await prisma.category.findMany()
-        console.log("DONE!")
-    } catch (e) {
-        error = true
-    }
+    // try {
+    //     categories = await prisma.category.findMany()
+    //     console.log("DONE!")
+    // } catch (e) {
+    //     error = true
+    // }
 
-    try {
-        popularListings = await prisma.popularListings.findMany()
-        console.log("DONE!")
-    } catch (e) {
-        error = true
-    }
+    // try {
+    //     popularListings = await prisma.popularListings.findMany()
+    //     console.log("DONE!")
+    // } catch (e) {
+    //     error = true
+    // }
 
-    try {
-        otherListings = await prisma.otherListings.findMany()
-        console.log("DONE!")
-    } catch (e) {
-        error = true
-    }
+    // try {
+    //     otherListings = await prisma.otherListings.findMany()
+    //     console.log("DONE!")
+    // } catch (e) {
+    //     error = true
+    // }
+
+    categories = await prisma.category.findMany()
+    popularListings = await prisma.popularListings.findMany()
+    otherListings = await prisma.otherListings.findMany()
 
     res.json({
         results: {
