@@ -14,7 +14,7 @@ app.use(cors({
     origin: "*"
 }))
 
-app.get('/api/data', async (_: any, res: any) => {
+app.get('/data', async (_: any, res: any) => {
     try {
         const results = {
             categories: await prisma.category.findMany(),

@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors({
     origin: "*"
 }));
-app.get('/api/data', async (_, res) => {
+app.get('/data', async (_, res) => {
     try {
         const results = {
             categories: await prisma.category.findMany(),
