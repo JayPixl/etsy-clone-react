@@ -15,23 +15,25 @@ app.use(cors({
 }))
 
 app.get('/api/data', async (_: any, res: any) => {
+    let results: any
+    let error: any
+
     try {
-        const results = {
+        results = {
             categories: await prisma.category.findMany(),
             popularListings: await prisma.popularListings.findMany(),
             otherListings: await prisma.otherListings.findMany()
         }
 
-        console.log(results)
-
-        res.json({
-            results
-        })
     } catch (e) {
-        res.json({
-            error: "Could not retrieve data"
-        })
+        error = "Could not retrieve data"
     }
+
+    console.log(results)
+    res.json({
+        results,
+        error
+    })
 })
 
 export default app
