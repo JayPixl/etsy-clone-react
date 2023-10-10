@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { prisma } from './utils/_prisma.js';
+import dataRoute from './data.js';
 const app = express();
 app.use(express.json());
 app.use(cors({
@@ -8,23 +8,6 @@ app.use(cors({
 }));
 app.get('/api', (_, res) => {
     res.json({ message: 'Hello from Express API!' });
-});
-app.get('/api/data', async (_, res) => {
-    try {
-        const results = {
-            categories: await prisma.category.findMany(),
-            popularListings: await prisma.popularListings.findMany(),
-            otherListings: await prisma.otherListings.findMany()
-        };
-        res.json({
-            results
-        });
-    }
-    catch (e) {
-        res.json({
-            error: "Could not retrieve data"
-        });
-    }
 });
 // app.get("/api/setmessages", async (_, res) => {
 //     try {
@@ -142,6 +125,7 @@ app.all("/api/*", (_, res) => {
     res.json({ error: "Invalid request" });
 });
 if (process.env.NODE_ENV !== "production") {
+    app.use(dataRoute);
     app.listen(3001, () => console.log("Dev API is online 🚀"));
 }
 export default app;

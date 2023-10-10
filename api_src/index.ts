@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-import { prisma } from './utils/_prisma.js'
 
 import dataRoute from './data.js'
 
