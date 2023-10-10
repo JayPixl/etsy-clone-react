@@ -15,6 +15,8 @@ app.use(cors({
 }))
 
 app.get('/api/data', async (_: any, res: any) => {
+    res.json({ test: "test" })
+
     let results: any
     let error: any
 

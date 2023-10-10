@@ -13,6 +13,7 @@ app.use(cors({
     origin: "*"
 }));
 app.get('/api/data', async (_, res) => {
+    res.json({ test: "test" });
     let results;
     let error;
     try {
