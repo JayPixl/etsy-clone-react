@@ -3,9 +3,7 @@
         "api/index.js": {
             "maxDuration": 10,
             "memory": 128,
-            "includeFiles": [
-                "api/**/*"
-            ]
+            "includeFiles": "api/**/*"
         }
     }
 }
