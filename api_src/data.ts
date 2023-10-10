@@ -2,11 +2,11 @@ import express from 'express'
 import cors from 'cors'
 import { prisma } from './utils/_prisma.js'
 
-let app: any
+let app: express.Express
 if (process.env.NODE_ENV === "production") {
     app = express()
 } else {
-    app = express.Router()
+    app = express.Router() as express.Express
 }
 
 app.use(express.json())
