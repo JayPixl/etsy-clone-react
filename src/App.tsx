@@ -31,9 +31,9 @@ export default function App() {
   }
 
   const loadError = () => {
-    if (window.confirm("There was an error while fetching the data for the page... Would you like to reload?"))
+    if (window.confirm("There was an error while fetching the data for the page... Would you like to reload?")) window.location.href = window.location.href
 
-      setLoading('error')
+    setLoading('error')
   }
 
   useEffect(() => {
