@@ -10,10 +10,16 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
+        "moduleResolution": "Node",
+        "baseUrl": "./",
+        "paths": {
+            "@prisma/client": [
+                "node_modules/@prisma/client"
+            ]
+        }
     },
     "exclude": [
-        "./src",
-        "./node_modules"
+        "./src"
     ],
     "include": [
         "./api_src"
